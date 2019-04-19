@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IFileDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cm.dao.IFileDao">
+
+    <insert id="saveText">
+        INSERT INTO file_data (id,filepath,filename,date,time,datetime) VALUES(null,#{str},#{filename},#{date},#{time},#{datetime});
+    </insert>
+
+    <select id="getInsertTextId" resultType="Integer">
+        SELECT LAST_INSERT_ID();
+    </select>
+
+    <select id="getFileList" resultType="com.cm.entity.FileData">
+        SELECT id,filename,date,time FROM file_data
+        <if test="dateList.size()>0">
+            WHERE date in
+            <foreach collection="dateList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="isSearching==true">
+            <choose>
+                <when test="dateList.size()>0">
+                    AND filename LIKE CONCAT('%',#{searchFile},'%')
+                </when>
+                <otherwise>
+                    WHERE filename LIKE CONCAT('%',#{searchFile},'%')
+                </otherwise>
+            </choose>
+        </if>
+        <if test="sortStatus=='-1'">
+            ORDER BY datetime DESC
+        </if>
+        <if test="sortStatus=='1'">
+            ORDER BY datetime ASC
+        </if>
+        LIMIT #{startIndex},#{getNum};
+    </select>
+
+    <select id="getFileCount" resultType="Integer">
+        select count(*) from file_data
+        <if test="dateList.size()>0">
+            WHERE date in
+            <foreach collection="dateList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="isSearching==true">
+            <choose>
+                <when test="dateList.size()>0">
+                    AND filename LIKE CONCAT('%',#{searchFile},'%')
+                </when>
+                <otherwise>
+                    WHERE filename LIKE CONCAT('%',#{searchFile},'%')
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <select id="getDistinctDate" resultType="java.lang.String">
+        select distinct date from file_data;
+    </select>
+
+    <select id="getDataFilepath" resultType="String">
+        SELECT filepath FROM file_data where id = #{id};
+    </select>
+
+    <delete id="deleteData" parameterType="java.lang.Integer">
+        delete from file_data where id = #{id};
+    </delete>
+
+    <select id="getDataFilename" resultType="String">
+        SELECT filename FROM file_data where id = #{id};
+    </select>
+
+    <update id="updateDataFilename">
+        UPDATE file_data SET filename=#{newFilename} WHERE id = #{id}
+    </update>
+
+
+
+
+</mapper>

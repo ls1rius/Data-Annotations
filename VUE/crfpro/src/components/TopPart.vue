@@ -24,7 +24,7 @@ export default {
     data() {
         return{
             isLoading: false,
-            defaultJson: "{\"content\":\"\",\"labelCategories\":[{\"id\":\"0\",\"text\":\"时间实体\",\"color\":\"#7ebf50\",\"border-color\":\"#b5d7e4\"},{\"id\":\"1\",\"text\":\"事件实体\",\"color\":\"#579ef8\",\"border-color\":\"#b5d7e4\"}],\"labels\":[],\"connectionCategories\":[{\"id\":\"0\",\"text\":\"在...之前\"},{\"id\":\"1\",\"text\":\"在...之后\"},{\"id\":\"2\",\"text\":\"在...期间\"}],\"connections\":[]}"
+            defaultJson: "{\"content\":\"\",\"labelCategories\":[{\"id\":\"0\",\"text\":\"时间实体\",\"color\":\"#7ebf50\",\"borderColor\":\"#b5d7e4\"},{\"id\":\"1\",\"text\":\"事件实体\",\"color\":\"#579ef8\",\"borderColor\":\"#b5d7e4\"}],\"labels\":[],\"connectionCategories\":[{\"id\":\"0\",\"text\":\"在...之前\"},{\"id\":\"1\",\"text\":\"在...之后\"},{\"id\":\"2\",\"text\":\"在...期间\"}],\"connections\":[]}"
         }
     },
     methods: {
@@ -33,7 +33,7 @@ export default {
             eleLink.download = this.$store.getters.getFilename;
             // eleLink.download = 'data.json';
             eleLink.style.display = 'none';
-            let blob = new Blob([JSON.stringify(this.$store.getters.getContent)]);
+            let blob = new Blob([JSON.stringify(this.$store.getters.getContent," ",2)]);
             // let blob = new Blob([this.waitForDownloadData]);
             eleLink.href = URL.createObjectURL(blob);
             document.body.appendChild(eleLink);
@@ -51,7 +51,7 @@ export default {
                 this.$store.commit('updateFilename',tmpFilename.substr(0,tmpFilename.length - tmpFilenameList[tmpFilenameList.length - 1].length - 1) + ".json");
                 this.$store.commit('updateId',-1);
                 uploadTmpData.content = event.target.result;
-                this.$store.commit('updateContent',JSON.stringify(uploadTmpData));
+                this.$store.commit('updateContent',JSON.stringify(uploadTmpData," ",2));
                 this.$store.commit('updateIsChangeMarkData',true);
                 this.$message({
                     title: '成功',
@@ -67,7 +67,7 @@ export default {
         },
         handleSave() {
             let info = {
-                "content": JSON.stringify(this.$store.getters.getContent),
+                "content": JSON.stringify(this.$store.getters.getContent," ",2),
                 "filename": this.$store.getters.getFilename
             };
             let self = this;

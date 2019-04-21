@@ -1,10 +1,10 @@
 <template>
     <div id="mark-lists">
-        <div class="mark-list">
-            <div class="headtitle"  v-bind:style="{background:timeColor}">
+        <div class="mark-list" v-for="(item,index) in this.labelCategories" :key="index">
+            <div class="headtitle"  v-bind:style="{background:item.color}">
                 <div class="headtitle-left">
-                    <div class="count-circle" style="background: #ffffff;"  v-bind:style="{color:timeColor}">{{timeTableData.length}}</div>
-                    <p>时间</p>
+                    <div class="count-circle" style="background: #ffffff;"  v-bind:style="{color:item.color}">{{this.entityTableData[0].length}}</div>
+                    <p>{{item.text}}</p>
                 </div>
                 <!-- <div class="headtitle-right">
                     <i class="el-icon-edit"></i>
@@ -13,7 +13,7 @@
             </div>
             <div class="mark-list-data">
                 <el-table
-                    :data="timeTableData"
+                    :data="this.entityTableData[0]"
                     height="100%"
                     border
                     :header-cell-style="{padding:'0'}"
@@ -26,39 +26,7 @@
                     </el-table-column>
                     <el-table-column
                     prop="data"
-                    label="时间">
-                    </el-table-column>
-                </el-table>
-            </div>
-        </div>
-
-        <div class="mark-list">
-            <div class="headtitle" v-bind:style="{background:eventColor}">
-                <div class="headtitle-left">
-                    <div class="count-circle" style="background: #ffffff" v-bind:style="{color:eventColor}">{{eventTableData.length}}</div>
-                    <p>事件</p>
-                </div>
-                <!-- <div class="headtitle-right">
-                    <i class="el-icon-edit"></i>
-                    <p>编辑</p>
-                </div> -->
-            </div>
-            <div class="mark-list-data">
-                <el-table
-                    :data="eventTableData"
-                    height="100%"
-                    border
-                    :header-cell-style="{padding:'0'}"
-                    :cell-style="{padding:'0'}"
-                    style="width: 100%;font-size:12px;">
-                    <el-table-column
-                    prop="id"
-                    label="ID"
-                    width="50">
-                    </el-table-column>
-                    <el-table-column
-                    prop="data"
-                    label="事件">
+                    :label="item.text">
                     </el-table-column>
                 </el-table>
             </div>
@@ -176,11 +144,9 @@ export default {
     name:'MarkLists',
     data() {
         return {
-            timeColor:'#7ebf50',
-            eventColor:'#579ef8',
+            labelCategories: "",
             relationColor:'#dda450',
-            eventTableData: [],
-            timeTableData: [],
+            entityTableData: [],
             relationTableData: []
         }
     },
@@ -192,37 +158,26 @@ export default {
     watch: {
         content() {
             // console.log(newValue);
-            this.timeTableData = [];
-            this.eventTableData = [];
             this.relationTableData = [];
             let newValueJson = JSON.parse(this.$store.getters.getContent);
-            // console.log(newValueJson.labelCategories[0].color);
-            this.timeColor = newValueJson.labelCategories[0].color;
-            this.eventColor = newValueJson.labelCategories[1].color;
+            console.log(newValueJson);
+            this.labelCategories = newValueJson.labelCategories;
+            this.entityTableData = newValueJson.labelCategories;
+            for (let i =0;i<this.entityTableData.length;i++){
+                this.entityTableData[i] = [];
+            }
+            console.log(this.entityTableData);
             let content = newValueJson.content;
             let labels = newValueJson.labels;
             let connections = newValueJson.connections;
             let connectionCategories = newValueJson.connectionCategories;
-            let timeLabel = 0;
-            let eventLabel = 0;
             for(let i = 0;i<labels.length;i++){
-                if(labels[i].categoryId == 0){
-                    let obj={id:'',data:''};
-                    // obj.id = labels[i].id;
-                    obj.id = timeLabel + 1;
-                    obj.data = content.substr(labels[i].startIndex, labels[i].endIndex - labels[i].startIndex);
-                    this.timeTableData.push(obj);
-                    timeLabel++;
-                }
-                else if(labels[i].categoryId == 1){
-                    let obj={id:'',data:''};
-                    // obj.id = labels[i].id;
-                    obj.id = eventLabel + 1;
-                    obj.data = content.substr(labels[i].startIndex, labels[i].endIndex - labels[i].startIndex);
-                    this.eventTableData.push(obj);
-                    eventLabel++;
-                }
+                let obj={id:'',data:''};
+                obj.id = this.entityTableData[labels[i].categoryId].length + 1;
+                obj.data = content.substr(labels[i].startIndex, labels[i].endIndex - labels[i].startIndex);
+                this.entityTableData[labels[i].categoryId].push(obj);
             }
+            console.log(this.entityTableData);
             for(let i = 0;i<connections.length;i++){
                 let obj={id:'',fromId:'',toId:'',data:'未知'};
                 // obj.id = connections[i].id;

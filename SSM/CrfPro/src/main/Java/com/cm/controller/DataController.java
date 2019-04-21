@@ -26,6 +26,17 @@ public class DataController {
     @Resource(name="connectionCategoryService")
     private IConnectionCategoryService connectionCategoryService;
 
+    @RequestMapping(value = "/getDefaultData",method = RequestMethod.GET)
+    public Object getDefaultData() {
+        HashMap<String, Object>ans = new HashMap<>();
+        ans.put("content","");
+        ans.put("labelCategories",getLabelCategory());
+        ans.put("labels",new ArrayList<>());
+        ans.put("connectionCategories",getConnectionCategory());
+        ans.put("connections",new ArrayList<>());
+        return ans;
+    }
+
     @RequestMapping(value = "/dealData",method = RequestMethod.POST)
     public Object dealData(@RequestBody HashMap<String, Object> mp) {
         String content = (String) mp.get("content");

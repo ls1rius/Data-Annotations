@@ -50,7 +50,7 @@ public class DataController {
         return ans;
     }
 
-    @RequestMapping(value = "/getLabelData",method = RequestMethod.GET)
+    @RequestMapping(value = "/getLabelCategory",method = RequestMethod.GET)
     public Object getLabelCategory(){
         return labelDataService.getLabelCategory();
     }

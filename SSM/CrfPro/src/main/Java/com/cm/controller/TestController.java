@@ -120,7 +120,31 @@ public class TestController {
         response.getWriter().close();
     }
 
-//    public static void main(String[] args){
-//        getFileList(0,10);
-//    }
+    public static void main(String[] args){
+        String a = "abcd";
+        String aa = "abcd";
+
+        String b = new String("abcd");
+        String c = "ab" + new String("cd");
+        String cc = "ab" + "cd";
+
+        System.out.println(a==b);
+        System.out.println(a==c);
+        System.out.println(a.equals(c));
+
+        System.out.println(a==aa);
+        System.out.println(a==cc);
+        System.out.println(b==c);
+
+
+        Integer d = 3;
+        Integer e = 3;
+        int f = 3;
+        System.out.println(d==e);
+        System.out.println(d==f);
+        d = 300;
+        e = 300;
+        System.out.println(d==e);
+
+    }
 }

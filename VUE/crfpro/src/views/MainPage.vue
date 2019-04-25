@@ -37,8 +37,8 @@ export default {
                 dealedDataTmp.labels = response.data.labels;
                 dealedDataTmp.connectionCategories = response.data.connectionCategories;
                 dealedDataTmp.connections = response.data.connections;
-                self.$store.commit('updateContent',JSON.stringify(dealedDataTmp," ",2));
                 self.$store.commit('updateIsChangeMarkData',true);
+                self.$store.commit('updateContent',JSON.stringify(dealedDataTmp," ",2));
                 self.$message({
                     title: '成功',
                     message: '初始数据加载成功',

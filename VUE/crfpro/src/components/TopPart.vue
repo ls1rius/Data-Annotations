@@ -44,15 +44,15 @@ export default {
             this.isLoading = true;
             let reader = new FileReader();
             let tmpFilename = e.target.files[0].name;
-            let uploadTmpData = JSON.parse(this.defaultJson);
+            let uploadTmpData = JSON.parse(this.$store.getters.getContent);
             reader.readAsText(e.target.files[0]);
             reader.onload = (event) => {
                 let tmpFilenameList = tmpFilename.split(".");
                 this.$store.commit('updateFilename',tmpFilename.substr(0,tmpFilename.length - tmpFilenameList[tmpFilenameList.length - 1].length - 1) + ".json");
                 this.$store.commit('updateId',-1);
                 uploadTmpData.content = event.target.result;
-                this.$store.commit('updateContent',JSON.stringify(uploadTmpData," ",2));
                 this.$store.commit('updateIsChangeMarkData',true);
+                this.$store.commit('updateContent',JSON.stringify(uploadTmpData," ",2));
                 this.$message({
                     title: '成功',
                     message: '文件上传成功',
@@ -106,14 +106,15 @@ export default {
             // })
             this.axios.post(url,info)
             .then(function (response) {
-                let dealedDataTmp = JSON.parse(self.defaultJson);
+                console.log(response);
+                let dealedDataTmp = JSON.parse(self.$store.getters.getContent);
                 dealedDataTmp.content = response.data.content;
                 dealedDataTmp.labelCategories = response.data.labelCategories;
                 dealedDataTmp.labels = response.data.labels;
                 dealedDataTmp.connectionCategories = response.data.connectionCategories;
                 dealedDataTmp.connections = response.data.connections;
-                self.$store.commit('updateContent',JSON.stringify(dealedDataTmp," ",2));
                 self.$store.commit('updateIsChangeMarkData',true);
+                self.$store.commit('updateContent',JSON.stringify(dealedDataTmp," ",2));
                 self.$message({
                     title: '成功',
                     message: '识别成功',

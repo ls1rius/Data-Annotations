@@ -134,8 +134,8 @@ export default {
             if (this.annotator === null) {
                 this.code = '';
             }
-            this.$store.commit('updateContent',JSON.stringify(this.annotator.store.json," ",2));
             this.$store.commit('updateIsChangeMarkData',false);
+            this.$store.commit('updateContent',JSON.stringify(this.annotator.store.json," ",2));
         },
         changeDiv2Input(){
             let self = this;

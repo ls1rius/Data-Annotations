@@ -127,10 +127,10 @@ export default {
             let url = "http://localhost:8079/file/getOneData";
             this.axios.post(url,info)
             .then(function (response) {
+                self.$store.commit('updateIsChangeMarkData',true);
                 self.$store.commit('updateId',response.data.id);
                 self.$store.commit('updateFilename',response.data.filename);
                 self.$store.commit('updateContent',JSON.parse(response.data.content));
-                self.$store.commit('updateIsChangeMarkData',true);
                 self.$message({
                     title: '成功',
                     message: '数据获取成功',

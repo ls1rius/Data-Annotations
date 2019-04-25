@@ -3,7 +3,7 @@
         <div class="mark-list" v-for="(item,index) in this.labelCategories" :key="index">
             <div class="headtitle"  v-bind:style="{background:item.color}">
                 <div class="headtitle-left">
-                    <div class="count-circle" style="background: #ffffff;"  v-bind:style="{color:item.color}">{{this.entityTableData[0].length}}</div>
+                    <div class="count-circle" style="background: #ffffff;" v-bind:style="{color:item.color}">{{entityTableData[index].length}}</div>
                     <p>{{item.text}}</p>
                 </div>
                 <!-- <div class="headtitle-right">
@@ -13,7 +13,7 @@
             </div>
             <div class="mark-list-data">
                 <el-table
-                    :data="this.entityTableData[0]"
+                    :data="entityTableData[index]"
                     height="100%"
                     border
                     :header-cell-style="{padding:'0'}"
@@ -160,13 +160,12 @@ export default {
             // console.log(newValue);
             this.relationTableData = [];
             let newValueJson = JSON.parse(this.$store.getters.getContent);
-            console.log(newValueJson);
             this.labelCategories = newValueJson.labelCategories;
-            this.entityTableData = newValueJson.labelCategories;
-            for (let i =0;i<this.entityTableData.length;i++){
-                this.entityTableData[i] = [];
+            this.entityTableData = [];
+            for (let i =0;i<this.labelCategories.length;i++){
+                this.entityTableData.push(new Array())
             }
-            console.log(this.entityTableData);
+            // console.log(this.entityTableData);
             let content = newValueJson.content;
             let labels = newValueJson.labels;
             let connections = newValueJson.connections;
@@ -177,7 +176,7 @@ export default {
                 obj.data = content.substr(labels[i].startIndex, labels[i].endIndex - labels[i].startIndex);
                 this.entityTableData[labels[i].categoryId].push(obj);
             }
-            console.log(this.entityTableData);
+            // console.log(this.entityTableData);
             for(let i = 0;i<connections.length;i++){
                 let obj={id:'',fromId:'',toId:'',data:'未知'};
                 // obj.id = connections[i].id;

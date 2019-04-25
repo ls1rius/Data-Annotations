@@ -60,4 +60,12 @@ public class DataController {
         return connectionCategoryService.getConnectionCategory();
     }
 
+    @RequestMapping(value = "/trainTheData",method = RequestMethod.POST)
+    public Object trainTheData(@RequestBody HashMap<String, Object> mp){
+        String content = (String) mp.get("content");
+        HashMap<String, Object>ans = new HashMap<>();
+        ans.put("status",dataService.trainTheData(content));
+        ans.put("content",content);
+        return ans;
+    }
 }

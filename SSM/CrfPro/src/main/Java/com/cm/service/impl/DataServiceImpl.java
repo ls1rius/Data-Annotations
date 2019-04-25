@@ -4,6 +4,7 @@ import com.cm.entity.Label;
 import com.cm.service.IDataService;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.WordDictionary;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -74,10 +75,12 @@ public class DataServiceImpl implements IDataService{
 //                                                        add("crf_test -m model data.txt");}};
 
 
-        List<String> cmdList = new ArrayList<String>(){{ add("cd " + DATA_FOLDER);
+        List<String> cmdList = new ArrayList<String>(){{
+            add("cd " + DATA_FOLDER);
             add("crf_test -m model data.txt > test.rst");
             add("cd PRE_RE");
-            add("python3.6 deal_rec_test_data_cre.py");}};
+            add("python3.6 deal_rec_test_data_cre.py");
+        }};
 
 
         List<String> resList = executeNewFlow(cmdList);
@@ -410,5 +413,18 @@ public class DataServiceImpl implements IDataService{
 //        return ans;
 //    }
 //
+
+
+    public Object trainTheData(String content){
+        List<String> cmdList = new ArrayList<String>(){{
+            add("cd " + DATA_FOLDER);
+            add("cd " + DATA_FOLDER);
+            add("cd " + DATA_FOLDER);
+
+        }};
+
+        List<String> resList = executeNewFlow(cmdList);
+        return StringUtils.join(resList,"\n");
+    }
 
 }

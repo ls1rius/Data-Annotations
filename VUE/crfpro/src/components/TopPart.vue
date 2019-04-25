@@ -11,8 +11,9 @@
                 <input type="file" id="upload-input" accept="text/plain" v-on:change="handleUpload" value="上传">
             </el-button>
             <el-button size="mini" id="recognize-btn" type="primary" class="top-btn" v-on:click="handleRecognize">识别</el-button>
-            <el-button size="mini" id="savebtn" type="primary" class="top-btn" v-on:click="handleSave">保存</el-button>
+            <el-button size="mini" id="save-btn" type="primary" class="top-btn" v-on:click="handleSave">保存</el-button>
             <el-button size="mini" id="download-btn" type="success" class="top-btn" v-on:click="handleDownload">下载</el-button>
+            <el-button size="mini" id="train-btn" type="success" class="top-btn" v-on:click="handleTrain">训练</el-button>
         </div>
     </div>
 </template>
@@ -63,37 +64,8 @@ export default {
         },
         handleRecognize() {
             this.isLoading = true;
-            this.requestForRecognize(JSON.parse(this.$store.getters.getContent).content);
-        },
-        handleSave() {
             let info = {
-                "content": JSON.stringify(this.$store.getters.getContent," ",2),
-                "filename": this.$store.getters.getFilename
-            };
-            let self = this;
-            self.isLoading = true;
-            let url = "http://localhost:8079/file/saveText";
-            this.axios.post(url,info)
-            .then(function (response) {
-                self.$message({
-                    title: '成功',
-                    message: '文件已保存',
-                    type: 'success'
-                });
-            })
-            .catch(function (error) {
-                // console.log(error);
-                self.$message({
-                    title: '失败',
-                    message: '文件保存失败',
-                    type: 'error'
-                });
-            })
-            self.isLoading = false;
-        },
-        requestForRecognize(data) {
-            let info = {
-                "content": data
+                "content": JSON.parse(this.$store.getters.getContent).content
             };
             let self = this;
             let url = "http://localhost:8079/data/dealData";
@@ -126,6 +98,61 @@ export default {
                 self.$message({
                     title: '失败',
                     message: '识别失败',
+                    type: 'error'
+                });
+                self.isLoading = false;
+            })
+        },
+        handleSave() {
+            let info = {
+                "content": JSON.stringify(this.$store.getters.getContent," ",2),
+                "filename": this.$store.getters.getFilename
+            };
+            let self = this;
+            self.isLoading = true;
+            let url = "http://localhost:8079/file/saveText";
+            this.axios.post(url,info)
+            .then(function (response) {
+                self.$message({
+                    title: '成功',
+                    message: '文件已保存',
+                    type: 'success'
+                });
+            })
+            .catch(function (error) {
+                // console.log(error);
+                self.$message({
+                    title: '失败',
+                    message: '文件保存失败',
+                    type: 'error'
+                });
+            })
+            self.isLoading = false;
+        },
+        handleTrain(){
+            this.isLoading = true;
+            let info = {
+                "content": this.$store.getters.getContent
+                // "content": JSON.parse(this.$store.getters.getContent).content
+            };
+            let self = this;
+            let url = "http://localhost:8079/data/trainTheData";
+            this.axios.post(url,info)
+            .then(function (response) {
+                
+                console.log(response.data);
+
+                self.$message({
+                    title: '成功',
+                    message: '训练成功',
+                    type: 'success'
+                });
+                self.isLoading = false;
+            })
+            .catch(function (error) {
+                self.$message({
+                    title: '失败',
+                    message: '训练失败',
                     type: 'error'
                 });
                 self.isLoading = false;

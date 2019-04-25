@@ -144,7 +144,7 @@ export default {
     name:'MarkLists',
     data() {
         return {
-            labelCategories: "",
+            labelCategories: [],
             relationColor:'#dda450',
             entityTableData: [],
             relationTableData: []

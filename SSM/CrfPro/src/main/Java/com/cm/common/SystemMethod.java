@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SystemMethod {
+    //执行cmd命令，并读取返回数据
     public static List<String> executeNewFlow(List<String> commands) {
         List<String> rspList = new ArrayList<String>();
         Runtime run = Runtime.getRuntime();

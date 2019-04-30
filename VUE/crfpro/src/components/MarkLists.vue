@@ -144,10 +144,10 @@ export default {
     name:'MarkLists',
     data() {
         return {
-            labelCategories: [],
-            relationColor:'#dda450',
-            entityTableData: [],
-            relationTableData: []
+            labelCategories: [],//数据库中标签类型列表
+            relationColor:'#dda450',//关系线的颜色
+            entityTableData: [],//实体数据集
+            relationTableData: []//关系数据集
         }
     },
     computed: {
@@ -157,29 +157,28 @@ export default {
     },
     watch: {
         content() {
-            // console.log(newValue);
             this.relationTableData = [];
             let newValueJson = JSON.parse(this.$store.getters.getContent);
             this.labelCategories = newValueJson.labelCategories;
+            //创建空的实体数据集
             this.entityTableData = [];
             for (let i =0;i<this.labelCategories.length;i++){
                 this.entityTableData.push(new Array())
             }
-            // console.log(this.entityTableData);
             let content = newValueJson.content;
             let labels = newValueJson.labels;
             let connections = newValueJson.connections;
             let connectionCategories = newValueJson.connectionCategories;
+            //按照标签序号将数据集加载入相应数组中
             for(let i = 0;i<labels.length;i++){
                 let obj={id:'',data:''};
                 obj.id = this.entityTableData[labels[i].categoryId].length + 1;
                 obj.data = content.substr(labels[i].startIndex, labels[i].endIndex - labels[i].startIndex);
                 this.entityTableData[labels[i].categoryId].push(obj);
             }
-            // console.log(this.entityTableData);
+            //加载关系数据
             for(let i = 0;i<connections.length;i++){
                 let obj={id:'',fromId:'',toId:'',data:'未知'};
-                // obj.id = connections[i].id;
                 obj.id = i + 1;
                 for(let j = 0;j<connectionCategories.length;j++){
                     if(connections[i].categoryId==connectionCategories[j].id){

@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 public class FilesMethod {
 
-
+    //上传文件的存储位置
     public final static String UPLOAD_FOLDER = "/Users/lihao/Desktop/Data/";
+    //训练之后的模型存储位置
     public final static String DATA_FOLDER = UPLOAD_FOLDER + "modelData/";
     /**
      * 读入TXT文件

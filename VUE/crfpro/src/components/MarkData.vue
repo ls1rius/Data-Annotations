@@ -56,19 +56,20 @@ export default {
     name: 'MarkData',
     data() {
         return{
-            selectedLabelCategory: null,
-            showLabelCategoriesDialog: false,
-            selectedConnectionCategory: null,
-            showConnectionCategoriesDialog: false,
-            annotator: null,
-            startIndex: -1,
-            endIndex: -1,
-            first: -1,
-            second: -1,
-            isSelecting:false
+            selectedLabelCategory: null,//选中的标注
+            showLabelCategoriesDialog: false,//控制是否显示选择标注弹窗
+            selectedConnectionCategory: null,//选中的关系
+            showConnectionCategoriesDialog: false,//控制是否显示选择关系弹窗
+            annotator: null,//插件必要变量，用以保存markdata模块的svg页面数据
+            startIndex: -1,//划词标注起始位置
+            endIndex: -1,//划词标注结束位置
+            first: -1,//关系起始标签id
+            second: -1,//关系结束标签id
+            isSelecting:false//是否显示弹框
         }
     },
     methods: {
+        //svg处数据装载，利用插件自动显示
         constructAnnotator: function (data) {
             this.annotator = new Annotator(data, document.getElementById('mark-data-inner'));
             this.annotator.on('textSelected', (startIndex, endIndex) => {
@@ -94,6 +95,7 @@ export default {
             });
             // setTimeout(() => this.getCode(), 100);
         },
+        //使用store中的数据进行svg处数据重新加载
         useData() {
             if (this.annotator !== null) {
                 this.$refs.svgContainer.innerHTML = "";
@@ -137,6 +139,7 @@ export default {
             this.$store.commit('updateIsChangeMarkData',false);
             this.$store.commit('updateContent',JSON.stringify(this.annotator.store.json," ",2));
         },
+        //文件重命名
         changeDiv2Input(){
             let self = this;
             let dom = this.$refs.inputDiv; //获取当前节点元素

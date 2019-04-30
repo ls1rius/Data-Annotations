@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static com.cm.common.FilesMethod.delFile;
-
+//时间戳处理
 public class TimeString {
 
     private static String valueOfString(String str, int len) {

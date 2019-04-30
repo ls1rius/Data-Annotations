@@ -41,7 +41,7 @@ public class DataServiceImpl implements IDataService{
 
         content = content.replaceAll("\\s*","");
 
-
+        //加载字典
         loadMyDict(time_item_path);
         loadMyDict(event_item_path);
 
@@ -414,7 +414,7 @@ public class DataServiceImpl implements IDataService{
 //    }
 //
 
-
+    //训练数据预留实现方法
     public Object trainTheData(String content){
         List<String> cmdList = new ArrayList<String>(){{
             add("cd " + DATA_FOLDER);

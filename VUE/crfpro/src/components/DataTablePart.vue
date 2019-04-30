@@ -80,16 +80,15 @@ export default {
     name:'DataTablePart',
     data() {
         return {
-            tableData: [],
-            dateList: [],
-            currentPage: 1,
-            pageSize: 15,
-            totalDataNum: 100,
-            choosedTime: "",
+            tableData: [],//数据列表
+            dateList: [],//过滤器处日期列表
+            currentPage: 1,//现处页面
+            pageSize: 15,//单页面文件数
+            totalDataNum: 100,//文件综述
             filters:[],
-            sortStatus: 0,
+            sortStatus: 0,//排序类型（按时间） 1：递增； -1：递减； 0:不做排序
             isSearching: false,
-            searchFile: ""
+            searchFile: ""//搜索的关键词
         }
     },
     methods: {

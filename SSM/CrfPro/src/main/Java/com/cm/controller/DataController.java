@@ -25,7 +25,7 @@ public class DataController {
 
     @Resource(name="connectionCategoryService")
     private IConnectionCategoryService connectionCategoryService;
-
+    //获取默认数据，即识别的content处为空
     @RequestMapping(value = "/getDefaultData",method = RequestMethod.GET)
     public Object getDefaultData() {
         HashMap<String, Object>ans = new HashMap<>();
@@ -36,7 +36,7 @@ public class DataController {
         ans.put("connections",new ArrayList<>());
         return ans;
     }
-
+    //识别数据，并组装成相应json数据返回
     @RequestMapping(value = "/dealData",method = RequestMethod.POST)
     public Object dealData(@RequestBody HashMap<String, Object> mp) {
         String content = (String) mp.get("content");
@@ -49,17 +49,17 @@ public class DataController {
         ans.put("connections",new ArrayList<>());
         return ans;
     }
-
+    //实体标签获取
     @RequestMapping(value = "/getLabelCategory",method = RequestMethod.GET)
     public Object getLabelCategory(){
         return labelDataService.getLabelCategory();
     }
-
+    //关系标签获取
     @RequestMapping(value = "/getConnectionCategory",method = RequestMethod.GET)
     public Object getConnectionCategory(){
         return connectionCategoryService.getConnectionCategory();
     }
-
+    //模型训练
     @RequestMapping(value = "/trainTheData",method = RequestMethod.POST)
     public Object trainTheData(@RequestBody HashMap<String, Object> mp){
         String content = (String) mp.get("content");

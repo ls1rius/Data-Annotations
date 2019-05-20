@@ -18,31 +18,31 @@
 ## 功能模块图
 ![功能模块图](./static/功能模块图.png)
 
-##安装部署指南：
+## 安装部署指南：
 
-###前端：
-####poplar-annotation: 
+### 前端：
+#### poplar-annotation: 
 https://github.com/synyi/poplar
 安装命令: npm i poplar-annotation
-####axios
+#### axios
 安装命令：npm install axios
-####element-ui
+#### element-ui
 安装命令：npm i element-ui -S
-####hightlight.js
+#### hightlight.js
 安装命令：npm install highlight.js
-####其他：
+#### 其他：
 vuex、vue-router、vuetify
-####前端编译软件：
+#### 前端编译软件：
 采用的是 VSCode
-####其他：
+#### 其他：
 npm和node都用最新版本吧，适配就好，自己搭建一下具体开发环境，然后直接拖进去一个src文件就可以
 
-###后端：
-####jdk 9
-####tomcat 9.0.1
-####后端编译软件：
+### 后端：
+#### jdk 9
+#### tomcat 9.0.1
+#### 后端编译软件：
 采用的是 IntelliJ IDEA
-####其他：
+#### 其他：
 同前端，自己搭建一下开发环境，直接拖个src进去，记得改数据库密码
 
 
@@ -54,7 +54,7 @@ npm和node都用最新版本吧，适配就好，自己搭建一下具体开发�
 5. 有事咨询邮箱 865212941@qq.com
 
 
-##Tip:
+## Tip:
 如果不会安装VUE或者SSM框架可以参考本人模板
 [SSM模板](https://github.com/ls1rius/SSM-DEMO.git)
 [VUE模板](https://github.com/ls1rius/VUE-DEMO.git)
